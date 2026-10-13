@@ -1,41 +1,19 @@
 "use client";
 
-import React, { useState, useEffect, use } from "react";
+import React from "react";
 import { fetchWordPressPostById } from "@/lib/wordpress";
 import { ArrowLeft, Calendar, User, Newspaper } from "lucide-react";
 import Link from "next/link";
 
-// Vercel build par prerendering issue fix karne ke liye
-export const dynamic = 'force-dynamic';
-
-export default function BlogDetailPage({
+export default async function BlogDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const resolvedParams = use(params);
+  const resolvedParams = await params;
   const postId = resolvedParams.id;
 
-  const [post, setPost] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function getPost() {
-      setLoading(true);
-      const data = await fetchWordPressPostById(postId);
-      setPost(data);
-      setLoading(false);
-    }
-    getPost();
-  }, [postId]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center text-[#0f172a] font-mono text-xs">
-        Loading WordPress Editorial Post...
-      </div>
-    );
-  }
+  const post = await fetchWordPressPostById(postId);
 
   if (!post) {
     return (
