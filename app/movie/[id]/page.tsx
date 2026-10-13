@@ -1,6 +1,7 @@
+"use client";
 
-
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 import {
   fetchMovieDetails,
   fetchMovieTrailer,
@@ -11,13 +12,9 @@ import { Star, ArrowLeft, Calendar, Play } from "lucide-react";
 import Link from "next/link";
 import TrailerModal from "@/app/components/TrailerModal";
 
-export default function MovieDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const resolvedParams = use(params);
-  const movieId = resolvedParams.id;
+export default function MovieDetailPage() {
+  const params = useParams();
+  const movieId = params.id as string;
 
   // States
   const [movie, setMovie] = useState<any>(null);
@@ -26,6 +23,7 @@ export default function MovieDetailPage({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!movieId) return;
     async function getData() {
       setLoading(true);
       const [details, key] = await Promise.all([
@@ -163,5 +161,3 @@ export default function MovieDetailPage({
     </div>
   );
 }
-
-
