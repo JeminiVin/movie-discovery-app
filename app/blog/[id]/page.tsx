@@ -5,6 +5,9 @@ import { fetchWordPressPostById } from "@/lib/wordpress";
 import { ArrowLeft, Calendar, User, Newspaper } from "lucide-react";
 import Link from "next/link";
 
+// Vercel build par prerendering issue fix karne ke liye
+export const dynamic = 'force-dynamic';
+
 export default function BlogDetailPage({
   params,
 }: {
