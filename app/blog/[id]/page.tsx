@@ -3,9 +3,6 @@ import { fetchWordPressPostById } from "@/lib/wordpress";
 import { ArrowLeft, Calendar, User, Newspaper } from "lucide-react";
 import Link from "next/link";
 
-// Next.js ko pre-render error se bachane ke liye force-dynamic set karein
-export const dynamic = "force-dynamic";
-
 async function BlogContent({ id }: { id: string }) {
   const post = await fetchWordPressPostById(id);
 
