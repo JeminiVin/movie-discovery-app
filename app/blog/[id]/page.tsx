@@ -1,12 +1,7 @@
-"use client"
-
 import React from "react";
 import { fetchWordPressPostById } from "@/lib/wordpress";
 import { ArrowLeft, Calendar, User, Newspaper } from "lucide-react";
 import Link from "next/link";
-
-// Next.js ko dynamic rendering ke liye instruct karne ke liye
-export const dynamic = 'force-dynamic';
 
 export default async function BlogDetailPage({
   params,
