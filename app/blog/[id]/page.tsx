@@ -1,17 +1,13 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { fetchWordPressPostById } from "@/lib/wordpress";
 import { ArrowLeft, Calendar, User, Newspaper } from "lucide-react";
 import Link from "next/link";
 
-export default async function BlogDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const resolvedParams = await params;
-  const postId = resolvedParams.id;
+// Next.js ko pre-render error se bachane ke liye force-dynamic set karein
+export const dynamic = "force-dynamic";
 
-  const post = await fetchWordPressPostById(postId);
+async function BlogContent({ id }: { id: string }) {
+  const post = await fetchWordPressPostById(id);
 
   if (!post) {
     return (
@@ -86,5 +82,24 @@ export default async function BlogDetailPage({
         />
       </article>
     </div>
+  );
+}
+
+export default async function BlogDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const resolvedParams = await params;
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center font-mono text-xs text-[#64748b]">
+          Loading Article...
+        </div>
+      }
+    >
+      <BlogContent id={resolvedParams.id} />
+    </Suspense>
   );
 }
