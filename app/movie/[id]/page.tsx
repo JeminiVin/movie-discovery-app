@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import {
@@ -14,7 +16,7 @@ import TrailerModal from "@/app/components/TrailerModal";
 
 export default function MovieDetailPage() {
   const params = useParams();
-  const movieId = params.id as string;
+  const movieId = params?.id as string;
 
   // States
   const [movie, setMovie] = useState<any>(null);
