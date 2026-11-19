@@ -3,7 +3,12 @@ import { fetchWordPressPostById } from "@/lib/wordpress";
 import { ArrowLeft, Calendar, User, Newspaper } from "lucide-react";
 import Link from "next/link";
 
-async function BlogContent({ id }: { id: string }) {
+async function BlogContent({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
   const post = await fetchWordPressPostById(id);
 
   if (!post) {
@@ -82,12 +87,11 @@ async function BlogContent({ id }: { id: string }) {
   );
 }
 
-export default async function BlogDetailPage({
+export default function BlogDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const resolvedParams = await params;
   return (
     <Suspense
       fallback={
@@ -96,7 +100,7 @@ export default async function BlogDetailPage({
         </div>
       }
     >
-      <BlogContent id={resolvedParams.id} />
+      <BlogContent params={params} />
     </Suspense>
   );
 }
