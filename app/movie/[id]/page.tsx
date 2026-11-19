@@ -1,7 +1,5 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import {
@@ -18,7 +16,6 @@ export default function MovieDetailPage() {
   const params = useParams();
   const movieId = params?.id as string;
 
-  // States
   const [movie, setMovie] = useState<any>(null);
   const [trailerKey, setTrailerKey] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -60,7 +57,6 @@ export default function MovieDetailPage() {
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-white font-sans">
-      {/* Top Navigation Back Link */}
       <div className="max-w-7xl mx-auto px-6 py-6">
         <Link
           href="/"
@@ -71,7 +67,6 @@ export default function MovieDetailPage() {
         </Link>
       </div>
 
-      {/* Hero Backdrop Banner */}
       <div className="relative w-full h-[450px] overflow-hidden">
         <img
           src={
@@ -85,10 +80,8 @@ export default function MovieDetailPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/40 to-transparent" />
       </div>
 
-      {/* Content Section */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 -mt-32 relative z-10 pb-20">
         <div className="flex flex-col md:flex-row gap-8 items-start">
-          {/* Poster Card */}
           <div className="w-64 sm:w-72 flex-shrink-0 rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-[#1e293b]">
             <img
               src={
@@ -101,7 +94,6 @@ export default function MovieDetailPage() {
             />
           </div>
 
-          {/* Details Metadata */}
           <div className="space-y-6 pt-4">
             <div className="flex flex-wrap items-center gap-3">
               <span className="bg-[#0284c7] text-white text-xs font-mono font-bold uppercase px-3 py-1 rounded-md">
@@ -125,7 +117,6 @@ export default function MovieDetailPage() {
               {movie.overview}
             </p>
 
-            {/* Genres */}
             {movie.genres && (
               <div className="flex flex-wrap gap-2 pt-2">
                 {movie.genres.map((g: { id: number; name: string }) => (
@@ -139,7 +130,6 @@ export default function MovieDetailPage() {
               </div>
             )}
 
-            {/* Trigger Trailer Modal */}
             <div className="pt-4 flex items-center gap-4">
               <button
                 onClick={() => setIsModalOpen(true)}
@@ -153,7 +143,6 @@ export default function MovieDetailPage() {
         </div>
       </div>
 
-      {/* Trailer Video Overlay Modal */}
       <TrailerModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
